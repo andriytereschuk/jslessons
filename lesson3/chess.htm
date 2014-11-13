@@ -36,29 +36,38 @@
       color: red;
       font-size: 22px;
     }
+	.hideCalcBoard script + .board {
+	  display: none;
+	}
+	.focus {
+	  background-color: #f1f1f1;
+	}
   </style>
 </head>
 <body>
   <div class="result"></div>
   <script>
   var 
-    n  = 8,
-    board = [
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0]
-    ],
+    n  = 5,
+    board = [],
     rowCount = 0;
     result = 0;
+      
+  function createBoard() {
+      for (var i = 0; i < n; i++) {
+          board.push([]);
+          for (var j = 0; j < n; j++) {
+            board[[i]].push(0);  
+          }
+      }
+  }
+      
+  createBoard();
+  showBoard();
 
   function showBoard() {
     var body = document.getElementsByTagName('body')[0];
-    var  divBoard =document.createElement('div');
+    var divBoard =document.createElement('div');
      divBoard.className = 'board';
      body.appendChild(divBoard);
 
@@ -66,6 +75,7 @@
         for (var colIndex = 0; colIndex < n; colIndex++) {
           var cellBoard  = document.createElement('div');
           cellBoard.className = 'cell';
+		  cellBoard.className += ' cell'+rowIndex+colIndex+'';
           cellBoard.innerHTML = board[rowIndex][colIndex] ? 'Q' : '';
           divBoard.appendChild(cellBoard);
         }
@@ -78,14 +88,20 @@
   function findCount() {
     function tryQueen(aRowIndex, aColIndex) {
       for (var i = 0; i < aRowIndex; ++i) {
+	    document.querySelector('.cell').className.replace('focus', '');
+	    document.querySelector('.cell'+i+aColIndex+'').className += ' focus';
         if (board[i][aColIndex]) return false;
       }
 
       for (var i = 1; i <= aRowIndex && aColIndex-i >=0; i++) {
+	    document.querySelector('.cell').className.replace('focus', '');
+	    document.querySelector('.cell'+i+aColIndex+'').className += ' focus';	  
         if (board[aRowIndex-i][aColIndex-i])  return false;
       }
 
       for (var i = 1; i <= aRowIndex && aColIndex+i < n; i++) {
+	    document.querySelector('.cell').className.replace('focus', '');
+	    document.querySelector('.cell'+i+aColIndex+'').className += ' focus';	  
         if (board[aRowIndex-i][aColIndex+i]) return false;
       }
 
@@ -93,7 +109,7 @@
     }
     
     function setQueen(aRowCount) {
-
+      //debugger;
       if (aRowCount == n) {
         showBoard();
         ++result;
@@ -103,14 +119,16 @@
       for (var i = 0; i < n; ++i) {
         if (tryQueen(aRowCount, i)) {
           board[aRowCount][i] = 1;
+		  document.querySelector('.cell'+aRowCount+i+'').innerHTML = 'Q';
           setQueen(aRowCount+1);
           board[aRowCount][i] = 0;
+		  document.querySelector('.cell'+aRowCount+i+'').innerHTML = '';
         }
       }
     }
-
+    
     setQueen(rowCount);
-
+	document.getElementsByTagName('body')[0].className = 'hideCalcBoard';
     return result;
   }
   document.querySelector('.result').innerHTML = 'Кількість всіх можливих розташувань - <span>' + findCount() + '</span>';

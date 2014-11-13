@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chess exercise</title>
+</head>
+<body>
+  <div class="result"></div>
+
+  <script>
+  var 
+    n = 5,
+    result = 0;
+
+  function findCount() {
+    function setQueen(aRowIndex) {
+      //debugger;
+      for (var i = 0; i < n; i++) {
+        if (
+          busyCols[i] ||
+          leftDiags[i + aRowIndex] ||
+          rightDiags[i - aRowIndex]
+        ) {
+          continue;
+        }
+
+        if (aRowIndex == n - 1) {
+          result++;
+        } else {
+          busyCols[i] = true;
+          leftDiags[i + aRowIndex] = true;
+          rightDiags[i - aRowIndex] = true;
+
+          setQueen(aRowIndex + 1);
+
+          busyCols[i] = false;
+          leftDiags[i + aRowIndex] = false;
+          rightDiags[i - aRowIndex] = false;
+        }
+      }
+    }
+    
+    var busyCols = [],
+        leftDiags = {},
+        rightDiags = {};
+
+    setQueen(0);
+    return result;
+  }
+
+  document.querySelector('.result').innerHTML = 'Кількість всіх можливих розташувань - <span>' + findCount() + '</span>';
+  </script>
+</body>
+</html>

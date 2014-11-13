@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Lesson 2</title>
+</head>
+<body>
+</body>
+<script>
+  var lab = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 1, 0, 1, 1, 1],
+    [0, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 0, 0, 0, 1, 1, 1, 3, 3],
+    [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+
+  var rowIndex = 1,
+      colIndex = 0;
+
+  function findPath() {
+    function lFind(aRowIndex, aColIndex, aStepRow, aStepCol, aIsFirstStep) {
+      function lFindRight() {
+        var lStepRow = Number(!aStepRow) * aStepCol,
+            lStepCol = Number(!aStepCol) * (-aStepRow),
+            lRowIndex = aRowIndex + lStepRow,
+            lColIndex = aColIndex + lStepCol;
+
+        return lFind(lRowIndex, lColIndex, lStepRow, lStepCol);
+      }
+
+      function lFindLeft() {
+        var lStepRow = Number(!aStepRow) * (-aStepCol),
+            lStepCol = Number(!aStepCol) * aStepRow,
+            lRowIndex = aRowIndex + lStepRow,
+            lColIndex = aColIndex + lStepCol;
+
+        return lFind(lRowIndex, lColIndex, lStepRow, lStepCol);
+      }
+
+      function lFindForward() {
+        var lRowIndex = aRowIndex + aStepRow,
+            lColIndex = aColIndex + aStepCol;
+
+        return lFind(lRowIndex, lColIndex, aStepRow, aStepCol);
+      }
+
+      function lFindResultProcess(aFindResult) {
+        aFindResult.forEach(function(aPath) {
+          lResult.push({
+            weight: lPath.weight + aPath.weight,
+            steps: lPath.steps.concat(aPath.steps)
+          });
+        });
+      }
+
+      var lRow = lab[aRowIndex];
+      if (!lRow) {
+        return false;
+      }
+
+      var lValue = lRow[aColIndex],
+          lPath = {
+            weight: lValue,
+            steps: [[aRowIndex, aColIndex]]
+          };
+
+      if (!lValue) {
+        return false;
+      } else
+      if (!aIsFirstStep) {
+        if (
+          (aRowIndex === 0) ||
+          (aRowIndex === lab.length - 1) ||
+          (aColIndex === 0) ||
+          (aColIndex === lRow.length - 1)
+        ) {
+          return [lPath];
+        }
+      }
+
+      var lResult = [];
+
+      var lFindRightResult = lFindRight();
+      if (lFindRightResult) {
+        lFindResultProcess(lFindRightResult);
+      }
+
+      var lFindForwardResult = lFindForward();
+      if (lFindForwardResult) {
+        lFindResultProcess(lFindForwardResult);
+      }
+
+      var lFindLeftResult = lFindLeft();
+      if (lFindLeftResult) {
+        lFindResultProcess(lFindLeftResult);
+      }
+
+      return lResult.length ? lResult : false;
+    }
+
+    console.time('qwe');
+    var lResult = lFind(rowIndex, colIndex, 0, 1, true);
+    console.timeEnd('qwe');
+    if (lResult) {
+
+      var lHTML = '';
+      lResult.forEach(function(aPath) {
+        lHTML +=
+          '<div>' +
+            '<b>Steps: </b>' + aPath.steps.join('; ') + '<br>' +
+            '<b>Weight: </b>' + aPath.weight +
+            '<hr>' +
+          '</div';
+      });
+      return lHTML;
+    } else {
+      return 'No paths';
+    }
+  }
+
+
+  document.write(findPath());
+</script>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Lesson 2</title>
+  <style>
+	body {
+	  font-family: Arial;
+	  font-size: 16px;
+	  line-height: 20px;
+	}
+	
+    .lab {
+      height: 480px;
+      width: 480px;
+	  border-right: 1px solid #7B7B7B;
+	  border-bottom: 1px solid #7B7B7B;
+	  float:left;
+	  margin-right: 40px;
+    }
+    .cell {     
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      float: left;
+	  border-left: 1px solid #7B7B7B;
+	  border-top: 1px solid #7B7B7B;	  
+    }
+	
+	.cell {
+		  border-left: 1px solid #7B7B7B;
+		  border-top: 1px solid #7B7B7B;	
+	}
+    .good {
+      background-color: #85D0A2;
+    }
+    .bad {
+      background-color: #FF9B9B;
+    }
+  </style>  
+</head>
+<body>
+	<div class="lab"></div>
+</body>
+<script>
+  var lab = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 1, 0, 0, 0, 1, 1, 1, 1, 1],
+    [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+  
+  labAsHTML = labToHTML();
+  
+  function labToHTML() {
+    var
+      lResult = [];
+      lLabHE = document.querySelector('.lab');
+
+    lab.forEach(function(aRow, aIndex) {
+      var lRow = [];
+      lResult.push(lRow);
+
+      aRow.forEach(function(aCol, aIndex) {
+        var lCellHE = document.createElement('div');
+        lCellHE.className = 'cell';
+        lCellHE.innerHTML = aCol;
+
+        lCellHE.style.width = (100 / aRow.length) + '%';
+        lCellHE.style.height = (100 / lab.length) + '%';
+
+        lLabHE.appendChild(lCellHE);
+
+        lRow.push(lCellHE);
+      });
+    });
+
+    return lResult;
+  }  
+
+  var rowIndex = 1,
+      colIndex = 0;
+
+  function findPath() {
+    function lFind(aRowIndex, aColIndex, aStepRow, aStepCol, aIsFirstStep) {
+      function lFindRight() {
+        var lStepRow = Number(!aStepRow) * aStepCol,
+            lStepCol = Number(!aStepCol) * (-aStepRow),
+            lRowIndex = aRowIndex + lStepRow,
+            lColIndex = aColIndex + lStepCol;
+
+        return lFind(lRowIndex, lColIndex, lStepRow, lStepCol);
+      }
+
+      function lFindLeft() {
+        var lStepRow = Number(!aStepRow) * (-aStepCol),
+            lStepCol = Number(!aStepCol) * aStepRow,
+            lRowIndex = aRowIndex + lStepRow,
+            lColIndex = aColIndex + lStepCol;
+
+        return lFind(lRowIndex, lColIndex, lStepRow, lStepCol);
+      }
+
+      function lFindForward() {
+        var lRowIndex = aRowIndex + aStepRow,
+            lColIndex = aColIndex + aStepCol;
+
+        return lFind(lRowIndex, lColIndex, aStepRow, aStepCol);
+      }
+
+      var lRow = lab[aRowIndex];
+      if (!lRow) {
+        return false;
+      }
+
+      var lValue = lRow[aColIndex],
+          lResult = [[aRowIndex, aColIndex]];
+
+      if (!lValue) {
+	    labAsHTML[aRowIndex][aColIndex].className += ' bad';
+        return false;
+      } else
+      if (!aIsFirstStep) {
+        if (
+          (aRowIndex === 0) ||
+          (aRowIndex === lab.length - 1) ||
+          (aColIndex === 0) ||
+          (aColIndex === lRow.length - 1)
+        ) {
+		  labAsHTML[aRowIndex][aColIndex].className += ' good';
+          return lResult;
+        }
+      }
+	  
+	   labAsHTML[aRowIndex][aColIndex].className += ' good';
+
+      var lFindRightResult = lFindRight();
+      if (lFindRightResult) {
+	    console.log(lResult.concat(lFindRightResult));
+        return lResult.concat(lFindRightResult);
+      }
+
+      var lFindForwardResult = lFindForward();
+      if (lFindForwardResult) {
+	    console.log(lResult.concat(lFindForwardResult));
+        return lResult.concat(lFindForwardResult);
+      }
+
+      var lFindLeftResult = lFindLeft();
+      if (lFindLeftResult) {
+	    console.log(lResult.concat(lFindLeftResult));
+        return lResult.concat(lFindLeftResult);
+      }
+
+	   labAsHTML[aRowIndex][aColIndex].className = labAsHTML[aRowIndex][aColIndex].className.replace('good', 'bad');
+      return false;
+    }
+
+    var lResult = lFind(rowIndex, colIndex, 0, 1, true);
+    return lResult ? lResult.join('<br>') : 'No path';
+  }
+
+  document.write(findPath());
+</script>
+</html>

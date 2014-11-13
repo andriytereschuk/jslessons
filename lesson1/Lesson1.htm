@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Lesson 1</title>
+</head>
+<body>
+</body>
+<script>
+  function findNumberWith(aFrom, aTo, aDigit) {
+    var lResults = [];
+
+    for(var lNumber = aFrom; lNumber < aTo; lNumber++) {
+      if (lNumber.toString().indexOf(aDigit) !== -1) {
+        lResults.push(lNumber);
+      }
+    }
+    return lResults;
+  }
+
+  var numbers = findNumberWith(100, 999, 5);
+  document.body.innerHTML = numbers.join('<br>');
+</script>
+</html>

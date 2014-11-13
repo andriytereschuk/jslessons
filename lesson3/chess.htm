@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chess exercise</title>
+  <style>
+    body {
+      font-family: Arial;
+      font-size: 14px;
+    }
+    .board {
+      border-right: 1px solid #BDBDBD;
+      border-bottom: 1px solid #BDBDBD;
+      float: left;
+      margin: 20px;      
+    }
+    .cell {
+      float: left;
+      border-left: 1px solid #BDBDBD;
+      border-top: 1px solid #BDBDBD;
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+      text-align: center;
+      color: red;            
+    }
+    .clr {
+      clear: right;
+    }
+    .result {
+      padding-left: 20px;
+      font-size: 18px;
+    }
+
+    .result span {
+      color: red;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="result"></div>
+  <script>
+  var 
+    n  = 8,
+    board = [
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0]
+    ],
+    rowCount = 0;
+    result = 0;
+
+  function showBoard() {
+    var body = document.getElementsByTagName('body')[0];
+    var  divBoard =document.createElement('div');
+     divBoard.className = 'board';
+     body.appendChild(divBoard);
+
+      for (var rowIndex = 0; rowIndex < n; rowIndex++) {
+        for (var colIndex = 0; colIndex < n; colIndex++) {
+          var cellBoard  = document.createElement('div');
+          cellBoard.className = 'cell';
+          cellBoard.innerHTML = board[rowIndex][colIndex] ? 'Q' : '';
+          divBoard.appendChild(cellBoard);
+        }
+        var clr  = document.createElement('div');
+        clr.className = 'clr';
+        divBoard.appendChild(clr);
+      } 
+  }
+
+  function findCount() {
+    function tryQueen(aRowIndex, aColIndex) {
+      for (var i = 0; i < aRowIndex; ++i) {
+        if (board[i][aColIndex]) return false;
+      }
+
+      for (var i = 1; i <= aRowIndex && aColIndex-i >=0; i++) {
+        if (board[aRowIndex-i][aColIndex-i])  return false;
+      }
+
+      for (var i = 1; i <= aRowIndex && aColIndex+i < n; i++) {
+        if (board[aRowIndex-i][aColIndex+i]) return false;
+      }
+
+      return true;
+    }
+    
+    function setQueen(aRowCount) {
+
+      if (aRowCount == n) {
+        showBoard();
+        ++result;
+        return 1; 
+      }
+
+      for (var i = 0; i < n; ++i) {
+        if (tryQueen(aRowCount, i)) {
+          board[aRowCount][i] = 1;
+          setQueen(aRowCount+1);
+          board[aRowCount][i] = 0;
+        }
+      }
+    }
+
+    setQueen(rowCount);
+
+    return result;
+  }
+  document.querySelector('.result').innerHTML = 'Кількість всіх можливих розташувань - <span>' + findCount() + '</span>';
+  </script>  
+</body>
+</html>

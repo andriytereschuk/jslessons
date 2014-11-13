@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>HomeWork 1</title>
+</head>
+<body>
+</body>
+<script>
+  function findNumberArmstrong(aFrom, aTo) {
+    var lResults =[], arrSum, lSum;
+    for(var i = aFrom; i < aTo; i++) {
+      arrSum = i.toString().split('');
+      lSum = 0; 
+        for (var k = 0; k < arrSum.length; k++) {
+          lSum = lSum + Math.pow(arrSum[k],arrSum.length);
+        }
+        if (i==lSum)  lResults.push(i);
+    }
+    return lResults;
+  }
+
+  var numberArmstrong = findNumberArmstrong(1, 1000);
+  document.body.innerHTML = numberArmstrong.join('<br>');
+</script>
+</html>

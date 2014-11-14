@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP Basics</title>
+</head>
+<body>
+  <script>
+    // Animal - ця ф-ція ств новий обєкт
+    function Animal(name) {
+      this.name = name;
+      this.canWalk = true,
+      this.run = function() {
+        console.log(this.name + ' can run');
+      }
+    }
+    
+    var animal = new Animal('barsik');
+    console.log(animal.canWalk);
+    
+    function Cat(name) {
+      this.name = name;
+    }
+    
+    // все объекты, созданные Cat 
+    // будут иметь прототип (наследовать) animal   
+    Cat.prototype = animal;
+    
+    murka = new Cat('murka');
+    
+    matros = new Cat('matros');
+    
+    console.log(matros.canWalk);
+    animal.canWalk = false;    
+    console.log(matros.canWalk);
+    
+    console.log(Animal.prototype);
+    Animal.prototype.move = function(aDistance) {
+      this.distance = aDistance;
+      console.log(this.name + ' move with speed ' + this.distance + ' km per hour');
+    }
+    
+    animal.move(5);
+    matros.move(6);
+    matros.run();
+    
+    function Dog(aName) {
+      this.name = aName;
+    }
+    
+    function extend(Child, Parent) {
+      var F = function() { }
+      F.prototype = Parent.prototype
+      Child.prototype = new F()
+      Child.prototype.constructor = Child
+      Child.superclass = Parent.prototype
+  }
+
+    
+    extend(Dog, Animal);
+    
+    var buldog = new Dog("malush");
+    console.log(Dog.superclass.constructor.call(name));
+    
+    
+    
+    //console.log(animal.canWalk);
+    
+    // Перевірка приналежності до об єкта
+    // document.write(animal instanceof Animal);
+  </script>
+    
+</body>
+</html>

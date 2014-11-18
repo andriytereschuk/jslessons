@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Lesson 4</title>
+  <style>
+	body {
+	  font-family: Arial;
+	  font-size: 16px;
+	  line-height: 20px;
+	}
+	
+    .lab {
+      height: 480px;
+      width: 480px;
+	  border-right: 1px solid #7B7B7B;
+	  border-bottom: 1px solid #7B7B7B;
+	  float:left;
+	  margin-right: 40px;
+    }
+    .cell {     
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      float: left;
+	  border-left: 1px solid #7B7B7B;
+	  border-top: 1px solid #7B7B7B;	  
+    }
+	
+	.cell {
+		  border-left: 1px solid #7B7B7B;
+		  border-top: 1px solid #7B7B7B;	
+	}
+    .good {
+      background-color: #85D0A2;
+    }
+    .bad {
+      background-color: #FF9B9B;
+    }
+  </style>  
+</head>
+<body>
+	<div class="lab"></div>
+</body>
+<script>
+  /* class Lab */
+  function Lab() {
+    var self = this;
+
+    function _constructor() {
+      self.labMatrix = [];
+      self.rowIndex = 0;
+      self.colIndex = 0;
+      self.stepRow = 0;
+      self.stepCol = 0;
+      self.findPath = findPath;
+    }
+    
+    // private function
+    function labToHTML() {
+      var
+        lResult = [];
+        lLabHE = document.querySelector('.lab');
+
+      lab.forEach(function(aRow, aIndex) {
+        var lRow = [];
+        lResult.push(lRow);
+
+        aRow.forEach(function(aCol, aIndex) {
+          var lCellHE = document.createElement('div');
+          lCellHE.className = 'cell';
+          lCellHE.innerHTML = aCol;
+
+          lCellHE.style.width = (100 / aRow.length) + '%';
+          lCellHE.style.height = (100 / lab.length) + '%';
+
+          lLabHE.appendChild(lCellHE);
+
+          lRow.push(lCellHE);
+        });
+      });
+
+      return lResult;
+    }
+    
+     function findPath(aLab, aRowIndex, aColIndex, aRowDirect, aColDirect) {
+      self.labMatrix = aLab;
+      self.rowIndex = aRowIndex;
+      self.colIndex = aColIndex;
+      self.stepRow = aRowDirect;
+      self.stepCol = aColDirect;
+      console.log(self.stepCol);
+      var aIsFirstStep = true;
+      function lFind(self.rowIndex, self.colIndex, self.stepRow, self.stepCol, aIsFirstStep) {
+        function lFindRight() {
+          var lStepRow = Number(!self.stepRow) * self.stepCol,
+              lStepCol = Number(!self.stepCol) * (-self.stepRow),
+              lRowIndex = self.rowIndex + lStepRow,
+              lColIndex = self.colIndex + lStepCol;
+
+          return lFind(lRowIndex, lColIndex, lStepRow, lStepCol);
+        }
+
+        function lFindLeft() {
+          var lStepRow = Number(!self.stepRow) * (-self.stepCol),
+              lStepCol = Number(!self.stepCol) * self.stepRow,
+              lRowIndex = self.rowIndex + lStepRow,
+              lColIndex = self.colIndex + lStepCol;
+
+          return lFind(lRowIndex, lColIndex, lStepRow, lStepCol);
+        }
+
+        function lFindForward() {
+          var lRowIndex = self.rowIndex + self.stepRow,
+              lColIndex = self.colIndex + self.stepCol;
+
+          return lFind(lRowIndex, lColIndex, self.stepRow, self.stepCol);
+        }
+
+        var lRow = lab[self.rowIndex];
+        if (!lRow) {
+          return false;
+        }
+
+        var lValue = lRow[self.colIndex],
+            lResult = [[self.rowIndex, self.colIndex]];
+
+        if (!lValue) {
+          labAsHTML[self.rowIndex][self.colIndex].className += ' bad';
+          return false;
+        } else
+        if (!aIsFirstStep) {
+          if (
+            (self.rowIndex === 0) ||
+            (self.rowIndex === lab.length - 1) ||
+            (self.colIndex === 0) ||
+            (self.colIndex === lRow.length - 1)
+          ) {
+            labAsHTML[self.rowIndex][self.colIndex].className += ' good';
+            return lResult;
+          }
+        }
+
+         labAsHTML[self.rowIndex][self.colIndex].className += ' good';
+
+        var lFindRightResult = lFindRight();
+        if (lFindRightResult) {
+          console.log(lResult.concat(lFindRightResult));
+          return lResult.concat(lFindRightResult);
+        }
+
+        var lFindForwardResult = lFindForward();
+        if (lFindForwardResult) {
+          console.log(lResult.concat(lFindForwardResult));
+          return lResult.concat(lFindForwardResult);
+        }
+
+        var lFindLeftResult = lFindLeft();
+        if (lFindLeftResult) {
+          console.log(lResult.concat(lFindLeftResult));
+          return lResult.concat(lFindLeftResult);
+        }
+
+         labAsHTML[self.rowIndex][self.colIndex].className = labAsHTML[self.rowIndex][self.colIndex].className.replace('good', 'bad');
+        return false;
+      }
+
+      var lResult = lFind(rowIndex, colIndex, 0, 1, true);
+      document.write(lResult ? lResult.join('<br>') : 'No path');
+                                                                       
+      _constructor();
+      return self;
+    }
+  }
+
+  var pathLab = new Lab();
+  
+  var lab = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 1, 0, 0, 0, 1, 1, 1, 1, 1],
+    [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+
+  pathLab.findPath(lab, 1, 0, 0, 1);
+</script>
+</html>

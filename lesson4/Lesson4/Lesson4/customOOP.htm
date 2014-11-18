@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Lesson 4</title>
+</head>
+<body>
+</body>
+<script>
+  /* class DBRow */
+  function DBRow() {
+    var self = this;
+
+    // private fields
+
+    function _constructor() {
+      self.tableName = '';
+      self.fieldNames = ['id', 'name', 'surname', 'position', 'age'];
+
+      self.save = save;
+    }
+
+    function save(aFieldValues) {
+      if (!self.tableName) {
+        alert('Table name is not set');
+        return;
+      }
+
+      console.log('Saved to ' + self.tableName + ' next data: ');
+      for (var i = 0; i < self.fieldNames.length; i++) {
+        console.log('    ' + self.fieldNames[i] + ' = ' + aFieldValues[i]);
+      }
+    }
+
+    _constructor();
+    return self;
+  }
+
+  /* class DBUserRow */
+  function DBUserRow() {
+    var self = new DBRow();
+
+    // private
+     var age = 25;
+
+    // overrides
+    var parent__save = self.save;
+
+    function _constructor() {
+      self.tableName = 'users';
+
+      self.save = save;
+    }
+
+    function save(aFieldValues, aIsCallParentMethod) {
+      if (aIsCallParentMethod) {
+         parent__save(aFieldValues);
+      }
+      saveSomethingElse();
+      console.log('Saved ' + age);
+    };
+
+    _constructor();
+    return self;
+  }
+
+  /* class DBAdminRow */
+  function DBAdminRow() {
+    var self = new DBRow();
+
+    function _constructor() {
+      self.tableName = 'admins';
+      self.fieldNames.push('screwdriver');
+    }
+
+    _constructor();
+    return self;
+  }
+
+  /* tests */
+
+  var userRow = new DBUserRow();
+  var adminRow = new DBAdminRow();
+
+  userRow.save([2, 'Andrii', 'Tereshchuk', 'developer', 25], true);
+  adminRow.save([2, 'Andrii', 'Tereshchuk', 'developer', 25, 'FVA 23-34fd Drive']);
+</script>
+</html>

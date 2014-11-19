@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lesson 6</title>
+  <style>
+  .chess_board {
+    float: left;
+    margin: 20px;
+    border-left: 1px solid;
+    border-bottom: 1px solid;
+    transform: rotateX(180deg);
+  }
+
+  .cell {
+    width : 40px;
+    height: 40px;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    transform: rotateX(180deg);
+  }
+
+  .clr {
+    clear: both;
+  }
+  </style>
+</head>
+<body>
+<div class="result"></div>
+
+<script>
+  function Chess() {
+    var self  = this;
+
+    var fBusyCols = [],
+        fLeftDiags = {},
+        fRightDiags = {};
+
+    function _constructor() {
+      self.findCount = findCount;
+      self.setQueen = setQueen;
+      self.busyColsGet = busyColsGet;
+    }
+
+    function busyColsGet() {
+      return fBusyCols.slice(0);
+    }
+
+    function findCount(aSizeChessBoard) {
+      self.sizeChessBoard = aSizeChessBoard || 8; // 8 - default
+      return self.setQueen(0);
+    };
+
+    function setQueen(aRowIndex) {
+      if (aRowIndex == self.sizeChessBoard) {
+        return 1;
+      }
+
+      var lCount = 0;
+      for (var i = 0; i < self.sizeChessBoard; i++) {
+        if (
+          (fBusyCols[i] && fBusyCols[i].busy) ||
+          fLeftDiags[i + aRowIndex] ||
+          fRightDiags[i - aRowIndex]
+        ) {
+          continue;
+        }
+
+        fBusyCols[i] = {
+          busy: true,
+          rowIndex: aRowIndex
+        };
+        fLeftDiags[i + aRowIndex] = true;
+        fRightDiags[i - aRowIndex] = true;
+
+        lCount += self.setQueen(aRowIndex + 1);
+
+        fBusyCols[i].busy = false;
+        fLeftDiags[i + aRowIndex] = false;
+        fRightDiags[i - aRowIndex] = false;
+      }
+      return lCount;
+    }
+
+    _constructor();
+    return self;
+  }
+
+  function ChessVisual() {
+    var self = new Chess();
+
+    // overrides
+    var fSetQueen__parent = self.setQueen;
+
+    function _constructor() {
+      self.setQueen = setQueen;
+    }
+
+    function setQueen(aRowIndex) {
+      var lResult = fSetQueen__parent(aRowIndex);
+      if ((aRowIndex == self.sizeChessBoard) && lResult) {
+        boardBuild();
+      }
+    }
+
+    function boardBuild() {
+      var lBusyCols = self.busyColsGet(),
+          lHTML = '<div class="chess_board">';
+
+      for (var lRowIndex = 0; lRowIndex < self.sizeChessBoard; lRowIndex++) {
+        for (var lColIndex = 0; lColIndex < self.sizeChessBoard; lColIndex++) {
+          lHTML += '<div class="cell">';
+
+          if (lBusyCols[lColIndex].rowIndex === lRowIndex) {
+            lHTML += 'Q';
+          }
+
+          lHTML += '</div>';
+        }
+        lHTML += '<div class="clr"></div>';
+      }
+      lHTML += '</div>';
+
+      document.body.innerHTML += lHTML;
+    }
+
+    _constructor();
+    return self;
+  }
+
+  var chess = new ChessVisual();
+  document.querySelector('.result').innerHTML = 'Кількість всіх можливих розташувань - <span>' + chess.findCount(5) + '</span>';
+</script>
+</body>
+</html>

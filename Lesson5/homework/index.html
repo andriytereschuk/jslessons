@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home work5</title>
+</head>
+<body>
+<div class="result"></div>
+
+<script>
+  function Chess() {
+    var self  = this;
+
+    var fResult = 0,
+        fBusyCols = [],
+        fLeftDiags = {},
+        frightDiags = {};    
+
+    function _constructor() {
+      self.sizeChessBoard = 8;
+      self.findCount  = findCount;
+      self.setQueen = setQueen;
+    }
+
+    function findCount(aSizeChessBoard) {
+    	if (aSizeChessBoard) self.sizeChessBoard = aSizeChessBoard;   
+      return self.setQueen(0);
+    };
+
+    function setQueen(aRowIndex) {
+      lSizeChessBoard = self.sizeChessBoard;
+      for (var i = 0; i < lSizeChessBoard; i++) {
+        if (
+          fBusyCols[i] ||
+          fLeftDiags[i + aRowIndex] ||
+          frightDiags[i - aRowIndex]
+        ) {
+          continue;
+        }
+
+        if (aRowIndex == lSizeChessBoard - 1) {
+          fResult++;
+        } else {
+          fBusyCols[i] = true;
+          fLeftDiags[i + aRowIndex] = true;
+          frightDiags[i - aRowIndex] = true;
+
+          setQueen(aRowIndex + 1);
+
+          fBusyCols[i] = false;
+          fLeftDiags[i + aRowIndex] = false;
+          frightDiags[i - aRowIndex] = false;
+        }
+      }
+      return fResult;
+    }    
+
+    _constructor();
+    return self;
+  }
+
+  var queen  = new Chess();
+  document.querySelector('.result').innerHTML = 'Кількість всіх можливих розташувань - <span>' + queen.findCount(5) + '</span>';	
+</script>
+</body>
+</html>

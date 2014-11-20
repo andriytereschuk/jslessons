@@ -1,0 +1,27 @@
+.at-slider {
+  height: 15px;
+  background: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+}
+
+.at-slider .handle {
+  background: rgba(0, 128, 255, 0.8);
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 150%;
+  left: 0;
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  width: 15px;
+}
+
+.at-slider .handle:hover {
+  background: rgba(0, 128, 255, 0.9);
+}
+.at-slider .handle:active {
+  background: rgba(0, 128, 255, 0.7);
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lesson 7</title>
+  <link rel="stylesheet" href="slider.css" type="text/css">
+  <style>
+    #test {
+      border: 1px solid;
+      height: 200px;
+      left: 0;
+      position: relative;
+      transition-duration: 400ms;
+      transition-property: left;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider"></div>
+  <br>
+  <br>
+  <div id="test"></div>
+
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="slider.js"></script>
+  <script>
+    $('.slider').slider({
+      onChange: function(aValue) {
+        $('#test').css('left', aValue + '%');
+      },
+      onMove: function(aValue) {
+        $('#test').html(aValue);
+      }
+    });
+  </script>
+</body>
+</html>

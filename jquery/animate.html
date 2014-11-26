@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Animate</title>
+	<script src="jquery-2.1.1.js"></script>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.item {
+			width: 200px;
+			height: 200px;
+			float: left;
+		}
+
+		div {
+			cursor: pointer;
+		}
+
+		#item1 {
+			background-color: orange;
+		}
+		#item2 {
+			background-color: green;
+		}
+		#item3 {
+			background-color: yellow;
+		}
+		#item4 {
+			background-color: lightblue;
+		}
+		#item5 {
+			background-color: red;
+		}
+
+		#modal {
+			position: absolute;
+			display: none;
+			width: 400px;
+			height: 400px;
+		}
+
+	</style>
+</head>
+<body>
+
+<div class="item" id="item1"></div>
+<div class="item" id="item2"></div>
+<div class="item" id="item3"></div>
+<div class="item" id="item4"></div>
+<div class="item" id="item5"></div>
+
+<div id="modal"></div>
+
+
+<script>
+	$(function() {
+		var modal = $('#modal'),
+			modalWidth = modal.width();
+			modalHeight = modal.height(),
+			oldDiv = null;
+		$('.item').on({
+			click: function(e) {
+				if(oldDiv) oldDiv.css('opacity', 1);
+				var jthis  = $(this),
+					stepIndex = 0;
+
+				modal.css({
+					'background-color' : jthis.css('background-color'),
+					'top' :  jthis.offset().top,
+					'left' : jthis.offset().left,
+					'width' :  jthis.width(),
+					'height' : jthis.height(),
+					'display' : 'block'
+				});
+
+				jthis.css('opacity', 0);				
+
+				modal.animate({
+					'width' :  modalWidth,
+					'height' :modalHeight,		
+					'left' : (window.innerWidth - modalWidth) / 2 ,
+					'top' : (window.innerHeight -modalHeight) / 2
+				}, 
+				{
+					duration: 600,
+					queue: true,
+					specialEasing: {
+						width: 'swing', // or 'linear'
+						height: 'linear'
+					},
+					step: function() {
+						console.log(stepIndex++);
+						if(stepIndex == 100) {
+							modal.stop();
+						}
+					},
+					complete: function() {
+						console.log('Animation completed!');
+					}
+				});
+
+				oldDiv = jthis;
+			}
+		});
+	});
+</script>	
+</body>
+</html>

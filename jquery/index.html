@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<title>jQuery</title>
+	<script src="jquery-2.1.1.js"></script>
+	</head>
+<body>
+<div class="container">
+	<h1 id="h1">Heading</h1>
+	<ul>
+		<li>list item 1</li>
+		<li>list item 2</li>
+		<li data-id="h1">list item 3</li>
+		<ul>
+			<li>list item 4</li>
+			<li id="var2">list item 5</li>
+			<li>list item 6</li>
+		</ul>
+		<li>list item 7</li>
+	</ul>
+</div>
+
+<script>
+	$(function() {
+		$('h1').on('click', function(e) {
+			//$(e.target).css('fontSize', '20px');
+			$(this).css('fontSize', '20px');
+		});
+	});
+
+	/*
+	parentsUntil('.div');
+	prevAll();
+	nextAll();
+	prevUntil('.div');
+	siblings();
+	contents(); - чілди з пробілами, текстами
+	closest('div') - найближчий батьківський селектор
+	offsetParent() - найближчий батькывський позиціонований (fixed, rel, abs) елемент
+	|=  - вибірка по першому атрибуту, наприклад перший клас
+
+	$(window).on("resize scroll", {user: "String"}, function(e) {
+		console.log(e.data.user);
+	});
+
+	or for each event separatly
+
+	$(window).on({
+		resize: function(e) {
+			console.log(e.data.user);
+		},
+		scroll: function(e) {},
+		click: function() {}
+	}, {user: "String"});
+
+	$(window).off(); // turn off all window events
+	$(window).off('resize'); // turn off windows resize event
+	$(window).one("resize scroll", function(e) {}); // спрацює тільки один раз
+	$(window).trigger('resize'); // 	myself initiate the launch event
+	$(window).trigger('click'); // initiate click
+
+	// creating element and appent it to body
+	$('<img>', {
+		src: 'http://svilake.com/images/logo.png',
+		alt: 'jQuery cource logo',
+		title: 'jQuery Basics',
+		click: function(e) {
+			$(this).toggleClass('selectedImg');
+		},
+		on: {
+			click: function(e) {
+				console.log('do the same that previous func');
+			}
+		}
+	})
+	.css({
+		'padding': '10px',
+		'border': '1px solid' 
+	})
+	.appendTo('body');
+
+
+	//Element manipulation
+	wrap('<div></div>')
+	wrapInner('<div></div>') - wrap children elements
+	wrapAll('<div></div>') - try to wrap all elements with changing DOM. Transfer elements form one blok to anather
+
+
+	// Basic affects
+	fadeTo(1000, 0.1)
+	fadeToggle() // if it was hide it will show, if it was show that it will hide
+	slideToggle()
+
+	$('.div').on('click', function(e) {
+		$(e.target) // == $(this)
+	});
+
+	offset() - return left and top offset
+	offset().left - return element offset left
+	offset().top - return element offset top
+	*/
+</script>
+
+</body>
+</html>

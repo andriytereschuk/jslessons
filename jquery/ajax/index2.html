@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax test</title>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+</head>
+<body>
+	<div id="ajax-text"></div>
+
+	<form id="mail-send">
+		<input type="text" name="userName" placeholder="Enter your name">
+		<input type="email" name="mail" placeholder="Enter your email">
+		<button type="submit">Send</button>
+	</form>
+
+	<script>
+		$(function() {
+			$('#mail-send').on({
+				submit: function(event) {
+					event.preventDefault();
+					var str = $(this).serialize();
+					console.log(str);
+					if($(this).children('input[name="mail"]').val()) {
+						$.ajax({
+								type: 'POST',
+								url: 'php/hello.php',
+								data: str,
+								success: function(html){
+									$('#ajax-text').html(html);
+								}
+						});
+					}
+					else {
+						alert('Input email shoud be not empty ');
+					}
+					return false;
+				}
+			});
+		});
+	</script>
+</body>
+</html>

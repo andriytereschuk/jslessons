@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax test</title>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+</head>
+<body>
+	<div id="current-time"></div>
+
+	<script>
+		$(function() {
+			function showDate() {
+				$.ajax({
+					  url: 'php/time.php',
+					  cache: false,
+					  success: function(html){
+					    $('#current-time').html(html);
+					  }
+				});
+			}
+
+			setInterval(showDate, 1000);
+		});
+	</script>
+</body>
+</html>

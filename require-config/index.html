@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Require JS</title>
+	<script src="js/require.js"></script>
+</head>
+<body>
+
+<h1>Require JS with config</h1>
+
+<script>
+	require.config({
+		baseUrl: 'js/lib',
+		paths: {
+			custom: '../custom'	
+		}
+	});
+
+	require(['jquery','custom/message'], function($, aMesssage) {
+		$(window).on({
+			click: function(e) {
+				alert(aMesssage);
+			}
+		})
+	})
+</script>
+</body>
+</html>

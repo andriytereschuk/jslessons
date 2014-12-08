@@ -1,0 +1,14 @@
+{
+	"images" : [
+		{
+			"imageURL": "http://placehold.it/900x600",
+			"thumbnailURL": "http://placehold.it/200x100",
+			"url": "http://google.com.ua"
+		},
+		{
+			"imageURL": "http://placehold.it/600x400",
+			"thumbnailURL": "http://placehold.it/150x100",
+			"url": "http://vk.com"
+		}
+	]
+}

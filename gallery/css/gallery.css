@@ -1,3 +1,7 @@
+.gallery {
+  padding-top: 10px;
+}
+
 .gallery-img-wrapper {
   width: 100%;
   overflow: hidden;
@@ -28,10 +32,16 @@
 }
 .thumbnail-img li {
   display: inline;
+  cursor: pointer;
 }
 .thumbnail-img li img {
   height: 100px;
   margin: 0 5px;
+  transition: .3s;
+}
+.thumbnail-img li.active img {
+  -webkit-filter: brightness(0.8);
+  filter: brightness(0.8);
 }
 
 .gallery-arrows {
@@ -50,6 +60,7 @@
 }
 
 .gallery-left {
+  display: none;
   left: 20px;
 }
 

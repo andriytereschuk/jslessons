@@ -1,5 +1,5 @@
 .gallery {
-
+	padding-top: 10px
 }
 
 .gallery-img-wrapper {
@@ -35,9 +35,19 @@
 	text-align: center;
 	li {
 		display: inline;
+		cursor: pointer;
+		
 		img {
 			height: 100px;
 			margin: 0 5px;
+			transition: .3s;
+		}
+
+		&.active {
+			img {
+			  -webkit-filter: brightness(.8);
+			  filter: brightness(.8);
+			}
 		}
 	}
 }
@@ -59,6 +69,7 @@
 }
 
 .gallery-left {
+	display: none;
 	left: 20px;
 }
 

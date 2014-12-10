@@ -23,7 +23,8 @@ $.fn.gallery = function(aOptions) {
 	var setup = function() {
 		// create img and thumbnail wrapper
 		self.append('<div class="gallery-img-wrapper"><a class="gallery-arrows gallery-left"></a><a class="gallery-arrows gallery-right"></a>'+''
-			+'<ul class="gallery-img"></ul></div><div class="thumbnail-img-wrapper"><ul class="thumbnail-img"></ul></div>');
+			+'<ul class="gallery-img"></ul></div><div class="thumbnail-img-wrapper"><ul class="thumbnail-img"></ul>'+''
+			+'<a class="thumb-gallery thumb-left"></a><a class="thumb-gallery thumb-right"></a></div>');
 
 		wrap = $('.gallery-img-wrapper');
 		ulImg = $('.gallery-img');
@@ -49,6 +50,7 @@ $.fn.gallery = function(aOptions) {
 
 				getImageHeight();
 				thumb();
+				thumbArrows();
 			}
 		});
 	}
@@ -144,6 +146,22 @@ $.fn.gallery = function(aOptions) {
 			.removeClass('active')
 			.eq(currentSlide)
 			.addClass('active');
+	}
+
+	var thumbArrows = function() {
+		$('.thumb-left').on({
+			click: function(event) {
+				event.preventDefault();
+				$('.gallery-left').click();
+			}
+		});
+
+		$('.thumb-right').on({
+			click: function(event) {
+				event.preventDefault();
+				$('.gallery-right').click();
+			}
+		});
 	}	
 
 	init();

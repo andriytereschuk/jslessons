@@ -1,0 +1,29 @@
+{
+	"images" : [
+		{
+			"imageURL": "http://placehold.it/900x600",
+			"thumbnailURL": "http://placehold.it/250x100",
+			"url": "http://google.com.ua"
+		},
+		{
+			"imageURL": "http://placehold.it/600x400",
+			"thumbnailURL": "http://placehold.it/150x100",
+			"url": "http://vk.com"
+		},
+		{
+			"imageURL": "http://placehold.it/800x500",
+			"thumbnailURL": "http://placehold.it/300x100",
+			"url": "http://google.com.ua"
+		},
+		{
+			"imageURL": "http://placehold.it/700x300",
+			"thumbnailURL": "http://placehold.it/350x100",
+			"url": "http://vk.com"
+		},
+		{
+			"imageURL": "http://placehold.it/500x300",
+			"thumbnailURL": "http://placehold.it/250x100",
+			"url": "http://vk.com"
+		}
+	]
+}

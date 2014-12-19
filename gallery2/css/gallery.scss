@@ -1,8 +1,6 @@
 .gallery-wrap {
   overflow: hidden;
   position: relative;
-
-  padding-top: 10px;
   background-color: #F7F7F7;
 
   &:before {
@@ -32,6 +30,7 @@
 
 .gallery-img-wrapper {
   position: relative;
+  margin: 10px 0;
   transition: height ease 1s;
 
   a {
@@ -67,22 +66,27 @@
 .thumbnail-img-wrapper {
   padding: 10px 40px 8px 40px;
   overflow: hidden;
-  margin-top: 10px;
   position: relative;
   background-color: #E7E7E7;
+  height: 100px;
 }
 
-.thumbnail-img {
-  width: 500%;
+.thumbnail-transform {
+  transition: 0.3s;
+  position: relative;
+  left: 0;
+  height: 100px;
 
-  li {
-    display: inline;
+  .thumb {
+    margin: 0 5px;
+    float: left;
     cursor: pointer;
-    
+    margin-bottom: 10px;
+    //opacity: 0;
+    transition: 0.3s;
+
     img {
-      height: 100px;
-      margin: 0 5px;
-      transition: .3s;
+      height: 100%;
     }
 
     &.active {

@@ -78,7 +78,7 @@
   height: 100px;
 
   .thumb {
-    margin: 0 5px;
+    padding: 0 5px;
     float: left;
     cursor: pointer;
     margin-bottom: 10px;
@@ -131,7 +131,7 @@
 }
 
 
-.thumb-gallery {
+.thumb-arrows a{
   display: block;
   width: 40px;
   height: 40px;
@@ -146,6 +146,10 @@
   &:hover {
     opacity: 0.6;
   }
+
+  &.thumb-hide-arrow {
+    display: none;
+  }
 }
 
 .thumb-left {
@@ -159,3 +163,4 @@
   background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-right-128.png');
   background-size: 100%;
 }
+

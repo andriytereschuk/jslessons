@@ -24,6 +24,11 @@
 			"imageURL": "http://placehold.it/800x300",
 			"thumbnailURL": "http://placehold.it/250x100",
 			"url": "http://vk.com"
+		},
+		{
+			"imageURL": "http://placehold.it/400x600",
+			"thumbnailURL": "http://placehold.it/400x100",
+			"url": "http://google.com.ua"
 		}
 	]
 }

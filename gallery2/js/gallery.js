@@ -43,15 +43,17 @@
 
 					// append arrows
 					if(settings.arrows) {
-						self.append('<div class="gallery-arrows"><a class="gallery-left" /><a class="gallery-right" /></div>');
+						wrapImg.append('<div class="gallery-arrows"><a class="gallery-left" /><a class="gallery-right" /></div>');
 						arrowActions();							
 					}
 
 					// append thumbnails
 					if(settings.thumb) {
 						self.append('<div class="thumbnail-img-wrapper"><div class="thumbnail-transform"></div></div>');
+						wrapThumbWrap = $('.thumbnail-img-wrapper');
 						wrapThumb = $('.thumbnail-transform');
 						tumbAppending();
+
 					}
 				}
 			});			
@@ -65,10 +67,13 @@
 		}
 
 		var setThumbWidth = function() {
+			// set 1-st thumb active class
+			wrapThumb.children('.thumb').first().addClass('active');
 			// set wrapThumb width
 			var wrapThumbHeight = wrapThumb.height();
 			var wrapThumbWidth = 0;
 			var tumbPadding = 10;
+			thumbArr = [];
 			$('.thumb img').each(function(index) {
 				$(this).one('load', function() {
 			    var tempWidth = this.width;
@@ -76,10 +81,18 @@
 			    var calcWidth = this.width * wrapThumbHeight / this.height;
 			    $(this).attr('width',calcWidth);
 			    wrapThumbWidth = wrapThumbWidth + calcWidth + tumbPadding;
+			    thumbArr.push(wrapThumbWidth);
 			    wrapThumb.css('width',wrapThumbWidth+'px');
-			    var bool = wrapThumb.children('.thumb').last().children('img').attr('width');			
-			    if(bool != 0) {
-			    	console.log('loaded');
+			    if(thumbArr.length == slideCount) {
+			    	console.log("loaded");
+			    	if(thumbArr[thumbArr.length-1] > wrapThumbWrap.width())
+			    	{
+			    		console.log("need thumb arrows");
+			    		wrapThumbWrap.append('<div class="thumb-arrows"><a class="thumb-left thumb-hide-arrow" /><a class="thumb-right" /></div>');
+			    		thumbArrowActions();
+			    	}
+
+			    	thumbClick();
 			    }
 				});
 			});
@@ -92,6 +105,10 @@
 
 		var chengeRight = function() {
 			$(this).unbind('click');
+
+			// sync with thumb
+			thumbRight();
+
 			var rightEl = $('.right-img'),
 					rightElHeight = rightEl.children('img').height();
 				wrapImg.height(rightElHeight);
@@ -142,6 +159,10 @@
 
 		var chengeLeft = function() {
 			$(this).unbind('click');
+
+			// sync thumb
+			thumbLeft();
+
 			var leftEl = $('.left-img'),
 					leftElHeight = leftEl.children('img').height();
 				wrapImg.height(leftElHeight);
@@ -187,6 +208,122 @@
 
 				$('.gallery-left').bind('click', chengeLeft);
 			});			
+		}
+
+		var thumbArrowActions = function() {
+			$('.thumb-left').bind('click', thumbLeft);
+			$('.thumb-right').bind('click', thumbRight);
+			currentThumb = 0;
+			widthThumb = wrapThumbWrap.width();
+			thumbSection = 1;
+			leftThumbSection = [0];
+		}
+
+		var thumbRight = function() {
+			$(this).unbind('click');
+			++currentThumb;
+			if(currentThumb == slideCount) {
+				currentThumb = 0;
+				leftThumbSection = [0];
+				thumbSection = 1;
+				wrapThumb.animate({
+						'left' : '0px'
+					}, 200, function() {
+						wrapThumb.children('.thumb')
+							.removeClass('active')
+							.eq(currentThumb)
+							.addClass('active');
+						$('.thumb-left').addClass('thumb-hide-arrow');
+						$('.thumb-right')
+							.removeClass('thumb-hide-arrow')
+							.bind('click', thumbRight);
+					});
+			}
+			else {
+				$('.thumb-left').removeClass('thumb-hide-arrow');
+				if( thumbArr[currentThumb] > widthThumb*thumbSection) {
+						++thumbSection;
+						leftThumbSection.push(currentThumb);
+						wrapThumb.animate({
+							'left' : -thumbArr[currentThumb-1] + 'px'
+						}, 200, function() {
+							wrapThumb.children('.thumb')
+								.removeClass('active')
+								.eq(currentThumb)
+								.addClass('active');
+							if(currentThumb == slideCount-1) {
+								$('.thumb-right').addClass('thumb-hide-arrow');
+							}
+							$('.thumb-right').bind('click', thumbRight);	
+						});
+				}
+
+				else {
+					wrapThumb.children('.thumb')
+						.removeClass('active')
+						.eq(currentThumb)
+						.addClass('active');
+					if(currentThumb == slideCount-1) {
+						$('.thumb-right').addClass('thumb-hide-arrow');
+					}
+					$('.thumb-right').bind('click', thumbRight);					
+				}
+			}			
+		}
+
+		var thumbLeft = function() {
+			$(this).unbind('click');
+			--currentThumb;
+			$('.right-left').removeClass('thumb-hide-arrow');
+			if((thumbArr[currentThumb] < widthThumb*(thumbSection-1)) && (thumbSection>1)) {
+					--thumbSection;
+					$('.thumb-right').removeClass('thumb-hide-arrow');
+					currentThumb = leftThumbSection[leftThumbSection.length-2];
+					if (currentThumb == 0) {
+						$('.thumb-left').addClass('thumb-hide-arrow');
+						wrapThumb.animate({
+							'left' : 0
+						}, 200, function() {
+							leftThumbSection.pop();
+							wrapThumb.children('.thumb')
+								.removeClass('active')
+								.eq(currentThumb)
+								.addClass('active');
+								$('.thumb-left').bind('click', thumbLeft);
+						});
+					}
+
+					else {
+						wrapThumb.animate({
+							'left' : -thumbArr[currentThumb-1] + 'px'
+						}, 200, function() {
+							leftThumbSection.pop();
+							wrapThumb.children('.thumb')
+								.removeClass('active')
+								.eq(currentThumb)
+								.addClass('active');
+								$('.thumb-left').bind('click', thumbLeft);
+						});
+					}
+			}
+
+			else {
+				wrapThumb.children('.thumb')
+					.removeClass('active')
+					.eq(currentThumb)
+					.addClass('active');
+				if(currentThumb == 0) {
+					$('.thumb-left').addClass('thumb-hide-arrow');
+				}
+				$('.thumb-left').bind('click', thumbLeft);				
+			}
+		}
+
+		var thumbClick = function() {
+				wrapThumb.children('.thumb').on('click', function(){
+					var cur = $(this).index();
+					console.log(cur);
+				});
 		}
 
 		setup();

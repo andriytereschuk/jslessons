@@ -1,17 +1,17 @@
 {
 	"images" : [
 		{
-			"imageURL": "http://placehold.it/500x400",
+			"imageURL": "http://placehold.it/400x600",
 			"thumbnailURL": "http://placehold.it/250x100",
 			"url": "http://google.com.ua"
 		},
 		{
-			"imageURL": "http://placehold.it/600x300",
+			"imageURL": "http://placehold.it/500x400",
 			"thumbnailURL": "http://placehold.it/150x100",
 			"url": "http://vk.com"
 		},
 		{
-			"imageURL": "http://placehold.it/650x500",
+			"imageURL": "http://placehold.it/600x500",
 			"thumbnailURL": "http://placehold.it/300x100",
 			"url": "http://google.com.ua"
 		},
@@ -21,18 +21,13 @@
 			"url": "http://vk.com"
 		},
 		{
-			"imageURL": "http://placehold.it/600x400",
+			"imageURL": "http://placehold.it/800x300",
 			"thumbnailURL": "http://placehold.it/250x100",
 			"url": "http://vk.com"
 		},
 		{
 			"imageURL": "http://placehold.it/400x600",
 			"thumbnailURL": "http://placehold.it/400x100",
-			"url": "http://google.com.ua"
-		},
-		{
-			"imageURL": "http://placehold.it/500x500",
-			"thumbnailURL": "http://placehold.it/200x100",
 			"url": "http://google.com.ua"
 		}
 	]

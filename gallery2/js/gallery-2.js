@@ -16,7 +16,6 @@
     var settings = $.extend(options, aOptions);
     var speed = settings.speed;
     var width = self.width();
-    var currentThumb = 0;
 
     // -------------------------------------------------------
 
@@ -111,7 +110,7 @@
 
       // sync with thumb
       thumbRight(nextId);
-      $wrapThumb.children('.thumb').eq(nextId).addClass('active');
+      $wrapThumb.children('.thumb').eq(nextId).addClass('act-slide');
 
       // prepare next slide
       $('.next-slide')
@@ -220,7 +219,7 @@
 
     setThumbWidth = function() {
       // set 1-st thumb active class
-      $wrapThumb.children('.thumb').first().addClass('active');
+      $wrapThumb.children('.thumb').first().addClass('act-slide active');
 
       // set wrapThumb width
       var wrapThumbHeight = $wrapThumb.height();
@@ -270,10 +269,12 @@
 
     thumbArrowActions = function() {
       $('.thumb-left').on('click', function(){
+        currentThumb = $wrapThumb.children('.active').index();
         --currentThumb;
         thumbLeft(currentThumb);        
       });
       $('.thumb-right').on('click', function(){
+        currentThumb = $wrapThumb.children('.active').index();
         ++currentThumb;
         thumbRight(currentThumb);
       });
@@ -283,36 +284,31 @@
     // -------------------------------------------------------
 
     thumbRight = function(currentThumb) {
+      console.log(currentThumb);
       if(currentThumb != itemsCount && currentThumb != 0) {
         // show left arrow
         $('.thumb-left').removeClass('thumb-hide-arrow');
 
         // check end of section
         var checkEndSection = false;
-        for (var i = 0; i < lastItemArr.length; i++) {
-          if(currentThumb == lastItemArr[i]) {
-            checkEndSection = true;
+        for (var i = 1; i < lastItemArr.length; i++) {
+          console.log(lastItemArr[i], currentThumb);
+          if(lastItemArr[i] > currentThumb) {
+            currentThumb = lastItemArr[i];
             break;
           }
         }
 
-        if (checkEndSection) {
-          $wrapThumb.animate({
-            'left' : -thumbArr[currentThumb-1] + 'px'
-          }, 200, function() {
-            $wrapThumb.children('.thumb')
-              .removeClass('active')
-              .eq(currentThumb)
-              .addClass('active');
-          });
-        }
+        console.log(currentThumb);
 
-        else {
+        $wrapThumb.animate({
+          'left' : -thumbArr[currentThumb-1] + 'px'
+        }, 200, function() {
           $wrapThumb.children('.thumb')
             .removeClass('active')
             .eq(currentThumb)
-            .addClass('active');        
-        }
+            .addClass('active');
+        });
 
         if(currentThumb == itemsCount-1) {
           $('.thumb-right').addClass('thumb-hide-arrow');

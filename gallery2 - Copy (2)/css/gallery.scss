@@ -2,50 +2,12 @@
   overflow: hidden;
   position: relative;
   background-color: #F7F7F7;
-}
-
-.gallery-img-wrapper {
-  position: relative;
-  margin: 10px 0;
-
-    .gallery-slide {
-      width: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 0;
-      display: none;
-      opacity: 0;
-      text-align: center;
-
-      &.current-slide {
-        z-index: 1;
-        opacity: 1;
-        display: block;        
-      }
-
-      a {
-        display: block;
-
-        img {
-          max-width: 100%;
-        }
-      }
-    }
-}
-
-.thumbnail-img-wrapper {
-  padding: 10px 40px 8px 40px;
-  overflow: hidden;
-  position: relative;
-  background-color: #E7E7E7;
-  height: 100px;
 
   &:before {
     display: block;
     position: absolute;
     content: "";
-    width: 80px;
+    width: 90px;
     height: 100%;
     left: 0;
     top: 0;
@@ -57,13 +19,56 @@
     display: block;
     position: absolute;
     content: "";
-    width: 80px;
+    width: 90px;
     height: 100%;
     right: 0;
     top: 0;
     background-image: linear-gradient(to left, #fff, rgba(250,250,250,0));
     z-index: 2;
   }
+}
+
+.gallery-img-wrapper {
+  position: relative;
+  margin: 10px 0;
+  transition: height ease 1s;
+
+  a {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    display: none;
+
+    img {
+      max-width: 100%;
+    }
+
+    &.current-img {
+      display: block;
+      top: 0;
+      left: 0;
+    }
+
+    &.left-img {
+      display: block;
+      top: 0;
+      left: -100%;
+    }
+
+    &.right-img {
+      display: block;
+      top: 0;
+      left: 100%;
+    }
+  }
+}
+
+.thumbnail-img-wrapper {
+  padding: 10px 40px 8px 40px;
+  overflow: hidden;
+  position: relative;
+  background-color: #E7E7E7;
+  height: 100px;
 }
 
 .thumbnail-transform {
@@ -86,8 +91,8 @@
 
     &.active {
       img {
-        -webkit-filter: brightness(.9);
-        filter: brightness(.9);
+        -webkit-filter: brightness(.8);
+        filter: brightness(.8);
       }
     }
   }
@@ -101,7 +106,7 @@
     height: 40px;
     position: absolute;
     top: 50%;
-    margin-top: -20px;
+    margin-top: -10px;
     z-index: 100;
     cursor: pointer;
     transition: 0.3s;

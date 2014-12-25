@@ -3,31 +3,57 @@
   position: relative;
   background-color: #F7F7F7;
 }
+.gallery-wrap:before {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 90px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-image: linear-gradient(to right, #ffffff, rgba(250, 250, 250, 0));
+  z-index: 2;
+}
+.gallery-wrap:after {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 90px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  background-image: linear-gradient(to left, #ffffff, rgba(250, 250, 250, 0));
+  z-index: 2;
+}
 
 .gallery-img-wrapper {
   position: relative;
   margin: 10px 0;
+  transition: height ease 1s;
 }
-.gallery-img-wrapper .gallery-slide {
+.gallery-img-wrapper a {
   width: 100%;
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 0;
-  display: none;
-  opacity: 0;
   text-align: center;
+  display: none;
 }
-.gallery-img-wrapper .gallery-slide.current-slide {
-  z-index: 1;
-  opacity: 1;
-  display: block;
-}
-.gallery-img-wrapper .gallery-slide a {
-  display: block;
-}
-.gallery-img-wrapper .gallery-slide a img {
+.gallery-img-wrapper a img {
   max-width: 100%;
+}
+.gallery-img-wrapper a.current-img {
+  display: block;
+  top: 0;
+  left: 0;
+}
+.gallery-img-wrapper a.left-img {
+  display: block;
+  top: 0;
+  left: -100%;
+}
+.gallery-img-wrapper a.right-img {
+  display: block;
+  top: 0;
+  left: 100%;
 }
 
 .thumbnail-img-wrapper {
@@ -36,28 +62,6 @@
   position: relative;
   background-color: #E7E7E7;
   height: 100px;
-}
-.thumbnail-img-wrapper:before {
-  display: block;
-  position: absolute;
-  content: "";
-  width: 80px;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background-image: linear-gradient(to right, #fff, rgba(250, 250, 250, 0));
-  z-index: 2;
-}
-.thumbnail-img-wrapper:after {
-  display: block;
-  position: absolute;
-  content: "";
-  width: 80px;
-  height: 100%;
-  right: 0;
-  top: 0;
-  background-image: linear-gradient(to left, #fff, rgba(250, 250, 250, 0));
-  z-index: 2;
 }
 
 .thumbnail-transform {
@@ -77,8 +81,8 @@
   height: 100%;
 }
 .thumbnail-transform .thumb.active img {
-  -webkit-filter: brightness(0.9);
-  filter: brightness(0.9);
+  -webkit-filter: brightness(0.8);
+  filter: brightness(0.8);
 }
 
 .gallery-arrows a {
@@ -87,7 +91,7 @@
   height: 40px;
   position: absolute;
   top: 50%;
-  margin-top: -20px;
+  margin-top: -10px;
   z-index: 100;
   cursor: pointer;
   transition: 0.3s;

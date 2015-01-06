@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Gallery 2</title>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel="stylesheet" href="css/gallery.css">
+
+	<style>
+		body,html {
+			background-color: #f1f1f1;
+			height: 100%;
+		}
+		#wrapper {
+			margin: 0 auto;
+			min-height: 100%;
+			background-color: #F7F7F7;
+		}
+	</style>
+</head>
+<body>
+
+<div id="wrapper">
+	<div id="gallery"></div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="js/gallery.js"></script>
+<script>
+  var data = [
+		{
+			"imageURL": "http://placehold.it/500x400",
+			"thumbnailURL": "http://placehold.it/250x100",
+			"url": "http://google.com.ua"
+		},
+		{
+			"imageURL": "http://placehold.it/600x300",
+			"thumbnailURL": "http://placehold.it/150x100",
+			"url": "http://vk.com"
+		},
+		{
+			"imageURL": "http://placehold.it/650x500",
+			"thumbnailURL": "http://placehold.it/250x100",
+			"url": "http://google.com.ua"
+		},
+		{
+			"imageURL": "http://placehold.it/700x300",
+			"thumbnailURL": "http://placehold.it/250x100",
+			"url": "http://vk.com"
+		},
+		{
+			"imageURL": "http://placehold.it/600x400",
+			"thumbnailURL": "http://placehold.it/250x100",
+			"url": "http://vk.com"
+		},
+		{
+			"imageURL": "http://placehold.it/400x600",
+			"thumbnailURL": "http://placehold.it/100x100",
+			"url": "http://google.com.ua"
+		},
+		{
+			"imageURL": "http://placehold.it/500x500",
+			"thumbnailURL": "http://placehold.it/200x100",
+			"url": "http://google.com.ua"
+		}
+	];
+
+	$(function() {
+		$('#gallery').atGallery(data, {
+			arrows: true,
+			autoShowDelay: 0,
+			thumbsPosition: 'left',
+			animationName: 'fade',
+
+			onLoad: function() {
+				console.log('loaded');
+			}
+		});
+	});
+</script>
+</body>
+</html>

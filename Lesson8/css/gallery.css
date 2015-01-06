@@ -1,0 +1,109 @@
+#wrapper {
+  text-align: center; }
+
+#gallery {
+  text-align: left; }
+
+.at-gallery {
+  background-color: #F7F7F7;
+  display: inline-block; }
+  .at-gallery .images-wrapper {
+    overflow: hidden;
+    position: relative; }
+    .at-gallery .images-wrapper .image {
+      height: 100%;
+      position: absolute;
+      text-align: center;
+      width: 100%; }
+      .at-gallery .images-wrapper .image:after {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle; }
+      .at-gallery .images-wrapper .image img {
+        display: inline-block;
+        vertical-align: middle; }
+      .at-gallery .images-wrapper .image img.loaded {
+        max-height: 100%;
+        max-width: 100%; }
+  .at-gallery .thumbnails-wrapper {
+    background-color: #E7E7E7;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative; }
+    .at-gallery .thumbnails-wrapper .btn-thumbs-next, .at-gallery .thumbnails-wrapper .btn-thumbs-prev {
+      cursor: pointer;
+      height: 40px;
+      margin-top: -20px;
+      opacity: 0.5;
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      z-index: 100; }
+      .at-gallery .thumbnails-wrapper .btn-thumbs-next:hover, .at-gallery .thumbnails-wrapper .btn-thumbs-prev:hover {
+        opacity: 0.6; }
+    .at-gallery .thumbnails-wrapper .btn-thumbs-next {
+      background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-right-128.png");
+      background-size: 100%;
+      right: 0; }
+    .at-gallery .thumbnails-wrapper .btn-thumbs-prev {
+      background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-left-128.png");
+      background-size: 100%;
+      left: 0; }
+  .at-gallery .btn-image-next, .at-gallery .btn-image-prev {
+    cursor: pointer;
+    display: block;
+    height: 40px;
+    margin-top: -20px;
+    opacity: 0.5;
+    position: absolute;
+    top: 50%;
+    transition: opacity 0.3s;
+    width: 40px;
+    z-index: 100; }
+    .at-gallery .btn-image-next:hover, .at-gallery .btn-image-prev:hover {
+      opacity: 0.6; }
+  .at-gallery .btn-image-prev {
+    background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-left-128.png");
+    background-size: 100%;
+    left: 0; }
+  .at-gallery .btn-image-next {
+    background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-right-128.png");
+    background-size: 100%;
+    right: 0; }
+  .at-gallery .thumbnails-container {
+    position: relative; }
+    .at-gallery .thumbnails-container .thumb {
+      cursor: pointer;
+      position: relative; }
+      .at-gallery .thumbnails-container .thumb.active:after {
+        background-color: rgba(0, 0, 0, 0.5);
+        bottom: 0;
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0; }
+      .at-gallery .thumbnails-container .thumb img {
+        height: 100%; }
+  .at-gallery.cols .images-wrapper, .at-gallery.cols .thumbnails-wrapper {
+    float: left; }
+  .at-gallery.cols .thumbnails-wrapper {
+    padding: 0 10px; }
+  .at-gallery.cols .thumbnails-container .thumb > img {
+    display: block;
+    margin: 0 auto; }
+  .at-gallery.cols .thumbnails-container .thumb + .thumb {
+    margin-top: 10px; }
+  .at-gallery.rows .thumbnails-wrapper {
+    padding: 10px 0; }
+  .at-gallery.rows .thumbnails-container {
+    display: inline-block;
+    white-space: nowrap; }
+    .at-gallery.rows .thumbnails-container .thumb {
+      display: inline-block;
+      height: 100%; }
+    .at-gallery.rows .thumbnails-container .thumb + .thumb {
+      margin-left: 10px; }
+
+/*# sourceMappingURL=gallery.css.map */

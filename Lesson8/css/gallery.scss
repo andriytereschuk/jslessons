@@ -1,0 +1,160 @@
+#wrapper {
+  text-align: center;
+}
+#gallery {
+  text-align: left;
+}
+
+.at-gallery {
+  background-color: #F7F7F7;
+  display: inline-block;
+
+  .images-wrapper {
+    overflow: hidden;
+    position: relative;
+
+    .image {
+      height: 100%;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+
+      &:after {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      img {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      img.loaded {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .thumbnails-wrapper {
+    background-color: #E7E7E7;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+
+
+    .btn-thumbs-next, .btn-thumbs-prev {
+      cursor: pointer;
+      height: 40px;
+      margin-top: -20px;
+      opacity: 0.5;
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      z-index: 100;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+
+    .btn-thumbs-next {
+      background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-right-128.png');
+      background-size: 100%;
+      right: 0;
+    }
+    .btn-thumbs-prev {
+      background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-left-128.png');
+      background-size: 100%;
+      left: 0;
+    }
+  }
+
+  .btn-image-next, .btn-image-prev {
+      cursor: pointer;
+      display: block;
+      height: 40px;
+      margin-top: -20px;
+      opacity: 0.5;
+      position: absolute;
+      top: 50%;
+      transition: opacity 0.3s;
+      width: 40px;
+      z-index: 100;
+
+      &:hover {
+        opacity: 0.6;
+      }
+  }
+
+  .btn-image-prev {
+    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-left-128.png');
+    background-size: 100%;
+    left: 0;
+  }
+
+  .btn-image-next {
+    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-right-128.png');
+    background-size: 100%;
+    right: 0;
+  }
+
+  .thumbnails-container {
+    position: relative;
+
+    .thumb {
+      cursor: pointer;
+      position: relative;
+
+      &.active:after {
+        background-color: rgba(0, 0, 0, 0.5);
+        bottom: 0;
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+
+  &.cols {
+    .images-wrapper, .thumbnails-wrapper {
+      float: left;
+    }
+    .thumbnails-wrapper {
+      padding: 0 10px;
+    }
+    .thumbnails-container {
+      .thumb > img {
+        display: block;
+        margin: 0 auto;
+      }
+      .thumb + .thumb {
+        margin-top: 10px;
+      }
+    }
+  }
+  &.rows {
+    .thumbnails-wrapper {
+      padding: 10px 0;
+    }
+    .thumbnails-container {
+      display: inline-block;
+      white-space: nowrap;
+
+      .thumb {
+        display: inline-block;
+        height: 100%;
+      }
+      .thumb + .thumb {
+        margin-left: 10px;
+      }
+    }
+  }
+}
